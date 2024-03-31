@@ -7,18 +7,30 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/buttonClick"
+        android:id="@+id/moneyClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click"
         android:layout_below="@id/textViewMoney"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Money: 0" />
+
+    <Button
+        android:id="@+id/foodFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/moneyClick"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Food Factory Count: 0" />
 
     <TextView
         android:id="@+id/textViewMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="102dp"
         android:text="Money: 0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
