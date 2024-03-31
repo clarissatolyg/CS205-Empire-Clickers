@@ -2,13 +2,16 @@ package com.example.empireclickers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.*;
 import android.view.*;
 import android.content.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.*;
 
 
 /*
@@ -19,26 +22,55 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonClick;
+    private Button moneyClick;
+    private Button foodFactoryClick;
     private TextView textViewMoney;
-    private int money = 0;
+    private final MoneyWrapper money = new MoneyWrapper(0);
+    private final FoodFactory foodFactory = new FoodFactory();
+
+    private List<FactoryInterface> factories = new ArrayList<>();
+
+    private Handler handler = new Handler();
+
+    private int updateInterval = 1000;
+
+    private final UpdateMoneyExecutorPool updateMoneyExecutorPool = new UpdateMoneyExecutorPool();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonClick = findViewById(R.id.buttonClick);
+        factories.add(foodFactory);
+
+        moneyClick = findViewById(R.id.moneyClick);
+        foodFactoryClick = findViewById(R.id.foodFactoryClick);
+
         textViewMoney = findViewById(R.id.textViewMoney);
 
-        loadGame(); // Load the saved game state
+        //loadGame(); // Load the saved game state
 
-        buttonClick.setOnClickListener(new View.OnClickListener() {
+        moneyClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                money++;
-                textViewMoney.setText("Money: " + money);
-                saveGame(); // Save the game state whenever the money is updated
+                money.addMoney(1);
+                moneyClick.setText("Money: " + money.getMoney().toString());
+                //saveGame(); // Save the game state whenever the money is updated
+            }
+        });
+
+        foodFactoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count = 0;
+                while(money.getMoney().intValue() >= foodFactory.getCostofFactory()){
+                    money.deductMoney(foodFactory.getCostofFactory());
+                    count++;
+                }
+                foodFactory.purchase(count);
+                foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
+                moneyClick.setText("Money: " + money.getMoney().toString());
+                //saveGame(); // Save the game state whenever the money is updated
             }
         });
 
@@ -49,34 +81,64 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_main:
                         // Switch to the main fragment/activity
                         return true;
-                    case R.id.navigation_empire_builder:
-                        // Intent to switch to EmpireBuilder Activity
-                        startActivity(new Intent(MainActivity.this, EmpireBuilder.class));
-                        return true;
                 }
                 return false;
             }
         });
+
+        handler.post(new Runnable(){
+            @Override
+            public void run() {
+                // upadte textView here
+
+                for(FactoryInterface f : factories){
+                    Runnable updateMoney = () -> money.addMoney(f.netProfitPerSecond());
+                    updateMoneyExecutorPool.submit(updateMoney);
+                }
+                moneyClick.setText("Money: " + money.getMoney().toString());
+                handler.postDelayed(this,updateInterval); // set time here to refresh textView
+            }
+        });
+
+    }
+
+    protected void startUpdateLoop() {
+        // Define a Runnable to be executed periodically
+        Log.d("MAIN", "fuck");
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                // Update UI or perform other tasks here
+                // For example, update the text view with current time
+                for(FactoryInterface f : factories){
+                    Runnable updateMoney = () -> money.addMoney(f.netProfitPerSecond());
+                    updateMoneyExecutorPool.submit(updateMoney);
+                }
+                moneyClick.setText("Money: " + money.getMoney().toString());
+                // Schedule the next execution of this Runnable after updateInterval milliseconds
+                handler.postDelayed(this, updateInterval);
+            }
+        };
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        saveGame(); // Ensure the game state is saved when the app is paused
+        //saveGame(); // Ensure the game state is saved when the app is paused
     }
 
-    private void saveGame() {
-        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Money", money);
-        editor.apply();
-    }
+//    private void saveGame() {
+//        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putInt("Money", money.getMoney());
+//        editor.apply();
+//    }
 
-    private void loadGame() {
-        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);
-        money = prefs.getInt("Money", 0); // Load the money, default to 0 if not found
-        textViewMoney.setText("Money: " + money);
-    }
+//    private void loadGame() {
+//        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);
+//        money.setMoney(prefs.getInt("Money", 0)); // Load the money, default to 0 if not found
+//        textViewMoney.setText("Money: " + money.getMoney());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,13 +158,13 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(mainActivityIntent);
                 }
                 return true;
-            case R.id.navigation_empire_builder:
-                // Navigate to Empire Builder Activity with appropriate flags
-                Intent empireBuilderIntent = new Intent(this, EmpireBuilder.class);
-                // This flag combination clears the task's existing activities except for the instance of the activity being launched
-                empireBuilderIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(empireBuilderIntent);
-                return true;
+//            case R.id.navigation_empire_builder:
+//                // Navigate to Empire Builder Activity with appropriate flags
+//                Intent empireBuilderIntent = new Intent(this, EmpireBuilder.class);
+//                // This flag combination clears the task's existing activities except for the instance of the activity being launched
+//                empireBuilderIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivity(empireBuilderIntent);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
