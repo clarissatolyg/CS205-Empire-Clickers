@@ -1,17 +1,17 @@
 package com.example.empireclickers;
 
-public class PaperFactory implements FactoryInterface {
-    private final long profitPerSecond = 20;
+public class ElectronicsFactory implements FactoryInterface {
+    private final long profitPerSecond = 30;
     private long count = 0;
-    private long costofFactory = 40;
+    private long costofFactory = 48;
 
-    public PaperFactory() {
+    public ElectronicsFactory() {
     }
 
     public void purchase(int amount) {
         for (int i = 0; i < amount; i++) {
             this.count += 1;
-            double temp = this.costofFactory * 1.1; // increase cost of factory after every purchase
+            double temp = this.costofFactory * 1.1; // increase cost after every purchase
             this.costofFactory = Math.round(Math.ceil(temp));
         }
     }
@@ -31,4 +31,6 @@ public class PaperFactory implements FactoryInterface {
     public long getCostofFactory() {
         return costofFactory;
     }
+
+
 }
