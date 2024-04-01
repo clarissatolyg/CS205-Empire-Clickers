@@ -2,7 +2,6 @@ package com.example.empireclickers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Button moneyClick;
     private Button foodFactoryClick;
     private TextView textViewMoney;
+
+    private GraphView graphViewMoney;
+
+    private List<DataPoint> datapoints = new ArrayList<>();
     private final MoneyWrapper money = new MoneyWrapper(0);
     private final FoodFactory foodFactory = new FoodFactory();
 
@@ -43,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
         factories.add(foodFactory);
 
+        for(int i = 0; i < 20; i++){
+            datapoints.add(new DataPoint(i,0));
+        }
+
         moneyClick = findViewById(R.id.moneyClick);
         foodFactoryClick = findViewById(R.id.foodFactoryClick);
 
         textViewMoney = findViewById(R.id.textViewMoney);
+
+        graphViewMoney = findViewById(R.id.graphView);
 
         //loadGame(); // Load the saved game state
 
@@ -86,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        graphViewMoney.setData(datapoints);
+
         handler.post(new Runnable(){
             @Override
             public void run() {
@@ -97,6 +108,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 moneyClick.setText("Money: " + money.getMoney().toString());
                 handler.postDelayed(this,updateInterval); // set time here to refresh textView
+            }
+        });
+
+        handler.post(new Runnable(){
+            @Override
+            public void run() {
+                // upadte textView here
+                datapoints.remove(0);
+                for (int i = 0; i < datapoints.size(); i++) {
+                    datapoints.get(i).setxVal(i);
+                }
+                datapoints.add(new DataPoint(datapoints.size(),money.getMoney().longValue()));
+                graphViewMoney.setData(datapoints);
+                handler.post(this); // set time here to refresh textView
             }
         });
 
