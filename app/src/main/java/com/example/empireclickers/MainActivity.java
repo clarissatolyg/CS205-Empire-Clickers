@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         moneyClick = findViewById(R.id.moneyClick);
         foodFactoryClick = findViewById(R.id.foodFactoryClick);
         clothesFactoryClick = findViewById(R.id.clothesFactoryClick);
-        paperFactoryClick = findViewById(R.id.clothesFactoryClick);
+        paperFactoryClick = findViewById(R.id.paperFactoryClick);
         electronicsFactoryClick = findViewById(R.id.electronicsFactoryClick);
         carFactoryClick = findViewById(R.id.carFactoryClick);
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 money.addMoney(1);
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 foodFactory.purchase(count);
                 foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 clothesFactory.purchase(count);
                 clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
             }
         });
 
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 paperFactory.purchase(count);
                 paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
             }
         });
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 electronicsFactory.purchase(count);
                 electronicsFactoryClick.setText("Electronics Factory Count: " + electronicsFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
             }
         });
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 carFactory.purchase(count);
                 carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
             }
         });
 
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     Runnable updateMoney = () -> money.addMoney(f.netProfitPerSecond());
                     updateMoneyExecutorPool.submit(updateMoney);
                 }
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
                 handler.postDelayed(this, updateInterval); // set time here to refresh textView
             }
         });
