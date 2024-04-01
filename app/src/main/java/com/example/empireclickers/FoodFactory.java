@@ -9,9 +9,11 @@ public class FoodFactory implements FactoryInterface {
     }
 
     public void purchase(int amount) {
-        this.count += amount;
-        double temp = this.costofFactory * Math.pow(1.1, amount);
-        this.costofFactory = Math.round(Math.ceil(temp));
+        for(int i = 0; i < amount; i++) {
+            this.count += 1;
+            double temp = this.costofFactory * 1.1;
+            this.costofFactory = Math.round(Math.ceil(temp));
+        }
     }
 
     public long netProfitPerSecond(){
