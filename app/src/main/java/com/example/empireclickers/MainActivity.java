@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.content.*;
@@ -90,10 +91,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_main:
                         // Switch to the main fragment/activity
                         return true;
+                    case R.id.navigation_empire:
+                        // Navigate to the Empire Activity
+                        Intent empireIntent = new Intent(MainActivity.this, EmpireActivity.class);
+                        empireIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(empireIntent);
+                        return true;
                 }
                 return false;
             }
         });
+
 
         graphViewMoney.setData(datapoints);
 
