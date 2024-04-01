@@ -102,24 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void startUpdateLoop() {
-        // Define a Runnable to be executed periodically
-        Log.d("MAIN", "fuck");
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                // Update UI or perform other tasks here
-                // For example, update the text view with current time
-                for(FactoryInterface f : factories){
-                    Runnable updateMoney = () -> money.addMoney(f.netProfitPerSecond());
-                    updateMoneyExecutorPool.submit(updateMoney);
-                }
-                moneyClick.setText("Money: " + money.getMoney().toString());
-                // Schedule the next execution of this Runnable after updateInterval milliseconds
-                handler.postDelayed(this, updateInterval);
-            }
-        };
-    }
+
+
 
     @Override
     protected void onPause() {
