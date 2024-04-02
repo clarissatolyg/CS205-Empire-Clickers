@@ -3,6 +3,7 @@ package com.example.empireclickers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -11,6 +12,11 @@ import android.widget.*;
 import android.view.*;
 import android.content.*;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.*;
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private Button electronicsFactoryClick;
     private Button carFactoryClick;
     private TextView textViewMoney;
+
+    private LineChart lineChart;
     private final MoneyWrapper money = new MoneyWrapper(0);
     // initialise factories
     private final FoodFactory foodFactory = new FoodFactory();
@@ -67,6 +75,26 @@ public class MainActivity extends AppCompatActivity {
         carFactoryClick = findViewById(R.id.carFactoryClick);
 
         textViewMoney = findViewById(R.id.textViewMoney);
+        lineChart = findViewById(R.id.chart);
+
+        lineChart.setDrawGridBackground(false);
+        lineChart.getXAxis().setDrawGridLines(false);
+        lineChart.getAxisLeft().setDrawGridLines(false);
+        lineChart.getAxisRight().setDrawGridLines(false);
+
+        List<Entry> entries = new LinkedList<>();
+        for(long i = 0; i < 20; i++){
+            entries.add(new Entry(i,0));
+        }
+
+        LineDataSet dataset = new LineDataSet(entries, "Money");
+        dataset.setColor(Color.BLUE);
+
+        LineData lineData = new LineData(dataset);
+        lineChart.setData(lineData);
+
+        lineChart.invalidate();
+
 
         //loadGame(); // Load the saved game state
 
@@ -177,6 +205,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                // update textView here
+                entries.remove(1);
+                for(Entry e : entries){
+                    if(e.getX() != 0) {
+                        e.setX(e.getX() - 1);
+                    }
+                }
+                entries.add(new Entry(entries.size(),money.getMoney().floatValue()));
+
+                LineDataSet dataset = new LineDataSet(entries, "Money");
+                dataset.setColor(Color.BLUE);
+
+                LineData lineData = new LineData(dataset);
+                lineChart.setData(lineData);
+
+                lineChart.invalidate();
+
+                handler.post(this); // set time here to refresh textView
+            }
+        });
     }
 
 
