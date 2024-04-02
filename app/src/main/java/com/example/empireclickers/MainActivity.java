@@ -2,6 +2,7 @@ package com.example.empireclickers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 
 import android.os.Bundle;
@@ -9,24 +10,35 @@ import android.os.Handler;
 import android.widget.*;
 import android.view.*;
 import android.content.*;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.*;
 
 
 /*
-* Basic Click Mechanism: Implemented in MainActivity, usually tied to a Button's OnClickListener.
-* Save and Load Game State: Could also live in MainActivity, using SharedPreferences or a dedicated class for managing persistent storage.
-* Idle Mechanics: Implemented as a service or using a Handler for timed updates within MainActivity.
-* */
+ * Basic Click Mechanism: Implemented in MainActivity, usually tied to a Button's OnClickListener.
+ * Save and Load Game State: Could also live in MainActivity, using SharedPreferences or a dedicated class for managing persistent storage.
+ * Idle Mechanics: Implemented as a service or using a Handler for timed updates within MainActivity.
+ * */
 
 public class MainActivity extends AppCompatActivity {
 
+    // initialise buttons
     private Button moneyClick;
     private Button foodFactoryClick;
+    private Button clothesFactoryClick;
+    private Button paperFactoryClick;
+    private Button electronicsFactoryClick;
+    private Button carFactoryClick;
     private TextView textViewMoney;
     private final MoneyWrapper money = new MoneyWrapper(0);
+    // initialise factories
     private final FoodFactory foodFactory = new FoodFactory();
+    private final ClothesFactory clothesFactory = new ClothesFactory();
+    private final PaperFactory paperFactory = new PaperFactory();
+    private final ElectronicsFactory electronicsFactory = new ElectronicsFactory();
+    private final CarFactory carFactory = new CarFactory();
 
     private List<FactoryInterface> factories = new ArrayList<>();
 
@@ -42,9 +54,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         factories.add(foodFactory);
+        factories.add(clothesFactory);
+        factories.add(paperFactory);
+        factories.add(electronicsFactory);
+        factories.add(carFactory);
 
         moneyClick = findViewById(R.id.moneyClick);
         foodFactoryClick = findViewById(R.id.foodFactoryClick);
+        clothesFactoryClick = findViewById(R.id.clothesFactoryClick);
+        paperFactoryClick = findViewById(R.id.paperFactoryClick);
+        electronicsFactoryClick = findViewById(R.id.electronicsFactoryClick);
+        carFactoryClick = findViewById(R.id.carFactoryClick);
 
         textViewMoney = findViewById(R.id.textViewMoney);
 
@@ -54,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 money.addMoney(1);
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
@@ -63,16 +83,73 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int count = 0;
-                while(money.getMoney().intValue() >= foodFactory.getCostofFactory()){
+                while (money.getMoney().intValue() >= foodFactory.getCostofFactory()) {
                     money.deductMoney(foodFactory.getCostofFactory());
                     count++;
                 }
                 foodFactory.purchase(count);
                 foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
-                moneyClick.setText("Money: " + money.getMoney().toString());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
+
+        clothesFactoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count = 0;
+                while (money.getMoney().intValue() >= clothesFactory.getCostofFactory()) {
+                    money.deductMoney(clothesFactory.getCostofFactory());
+                    count++;
+                }
+                clothesFactory.purchase(count);
+                clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
+            }
+        });
+
+        paperFactoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = 0;
+                while (money.getMoney().intValue() >= paperFactory.getCostofFactory()) {
+                    money.deductMoney(paperFactory.getCostofFactory());
+                    count++;
+                }
+                paperFactory.purchase(count);
+                paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
+            }
+        });
+
+        electronicsFactoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = 0;
+                while (money.getMoney().intValue() >= electronicsFactory.getCostofFactory()) {
+                    money.deductMoney(electronicsFactory.getCostofFactory());
+                    count++;
+                }
+                electronicsFactory.purchase(count);
+                electronicsFactoryClick.setText("Electronics Factory Count: " + electronicsFactory.getCount());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
+            }
+        });
+
+        carFactoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = 0;
+                while (money.getMoney().intValue() >= carFactory.getCostofFactory()) {
+                    money.deductMoney(carFactory.getCostofFactory());
+                    count++;
+                }
+                carFactory.purchase(count);
+                carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
+                textViewMoney.setText("Money: " + money.getMoney().toString());
+            }
+        });
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -86,23 +163,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        handler.post(new Runnable(){
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                // upadte textView here
+                // update textView here
 
-                for(FactoryInterface f : factories){
+                for (FactoryInterface f : factories) {
                     Runnable updateMoney = () -> money.addMoney(f.netProfitPerSecond());
                     updateMoneyExecutorPool.submit(updateMoney);
                 }
-                moneyClick.setText("Money: " + money.getMoney().toString());
-                handler.postDelayed(this,updateInterval); // set time here to refresh textView
+                textViewMoney.setText("Money: " + money.getMoney().toString());
+                handler.postDelayed(this, updateInterval); // set time here to refresh textView
             }
         });
 
     }
-
-
 
 
     @Override
@@ -153,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
 }

@@ -10,16 +10,16 @@
         android:id="@+id/moneyClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewMoney"
+        android:layout_above="@id/foodFactoryClick"
         android:layout_centerInParent="true"
         android:layout_marginTop="14dp"
-        android:text="Money: 0" />
+        android:text="Beg" />
 
     <Button
         android:id="@+id/foodFactoryClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/moneyClick"
+        android:layout_above="@id/clothesFactoryClick"
         android:layout_centerInParent="true"
         android:layout_marginTop="14dp"
         android:text="Food Factory Count: 0" />
@@ -28,10 +28,49 @@
         android:id="@+id/textViewMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp"
+        android:layout_above="@id/moneyClick"
         android:text="Money: 0" />
+
+    <Button
+        android:id="@+id/clothesFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/paperFactoryClick"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Clothes Factory Count: 0"
+        />
+
+    <Button
+        android:id="@+id/paperFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/electronicsFactoryClick"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Paper Factory Count: 0"
+        />
+
+    <Button
+        android:id="@+id/electronicsFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/carFactoryClick"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Electronics Factory Count: 0"
+        />
+
+    <Button
+        android:id="@+id/carFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="14dp"
+        android:text="Car Factory Count: 0"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
