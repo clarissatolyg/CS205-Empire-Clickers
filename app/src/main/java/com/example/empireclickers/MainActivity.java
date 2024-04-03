@@ -37,7 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private Button paperFactoryClick;
     private Button electronicsFactoryClick;
     private Button carFactoryClick;
+
+    // initialise textviews
     private TextView textViewMoney;
+    private TextView textViewFoodFactoryCost;
+    private TextView textViewClothesFactoryCost;
+    private TextView textViewPaperFactoryCost;
+    private TextView textViewElectronicsFactoryCost;
+    private TextView textViewCarFactoryCost;
 
     private LineChart lineChart;
     private final MoneyWrapper money = new MoneyWrapper(0);
@@ -74,7 +81,22 @@ public class MainActivity extends AppCompatActivity {
         electronicsFactoryClick = findViewById(R.id.electronicsFactoryClick);
         carFactoryClick = findViewById(R.id.carFactoryClick);
 
+        // set text
         textViewMoney = findViewById(R.id.textViewMoney);
+        textViewFoodFactoryCost = findViewById(R.id.textViewFoodFactoryCost);
+        textViewClothesFactoryCost = findViewById(R.id.textViewClothesFactoryCost);
+        textViewPaperFactoryCost = findViewById(R.id.textViewPaperFactoryCost);
+        textViewElectronicsFactoryCost = findViewById(R.id.textViewElectronicsFactoryCost);
+        textViewCarFactoryCost = findViewById(R.id.textViewCarFactoryCost);
+
+        textViewFoodFactoryCost.setText("Food Factory Cost: " + foodFactory.getCostofFactory());
+        textViewClothesFactoryCost.setText("Clothes Factory Cost: " + clothesFactory.getCostofFactory());
+        textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
+        textViewElectronicsFactoryCost.setText("Electronics Factory Cost: " + electronicsFactory.getCostofFactory());
+        textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
+
+
+        // initialise line chart
         lineChart = findViewById(R.id.chart);
 
         lineChart.setDrawGridBackground(false);
@@ -118,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 foodFactory.purchase(count);
                 foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewFoodFactoryCost.setText("Food Factory Cost: " + foodFactory.getCostofFactory());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
@@ -133,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 clothesFactory.purchase(count);
                 clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewClothesFactoryCost.setText("Clothes Factory Cost: " + clothesFactory.getCostofFactory());
             }
         });
 
@@ -147,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 paperFactory.purchase(count);
                 paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
             }
         });
 
@@ -175,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 carFactory.purchase(count);
                 carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
             }
         });
 
