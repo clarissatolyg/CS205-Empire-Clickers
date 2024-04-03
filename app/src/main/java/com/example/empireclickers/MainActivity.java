@@ -3,6 +3,7 @@ package com.example.empireclickers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -18,6 +19,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.w3c.dom.Text;
 
 import java.util.*;
 
@@ -37,7 +40,14 @@ public class MainActivity extends AppCompatActivity {
     private Button paperFactoryClick;
     private Button electronicsFactoryClick;
     private Button carFactoryClick;
+
+    // initialise text views
     private TextView textViewMoney;
+    private TextView textViewFoodFactoryCost;
+    private TextView textViewClothesFactoryCost;
+    private TextView textViewPaperFactoryCost;
+    private TextView textViewElectronicsFactoryCost;
+    private TextView textViewCarFactoryCost;
 
     private LineChart lineChart;
     private final MoneyWrapper money = new MoneyWrapper(0);
@@ -75,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
         carFactoryClick = findViewById(R.id.carFactoryClick);
 
         textViewMoney = findViewById(R.id.textViewMoney);
+        textViewFoodFactoryCost = findViewById(R.id.textViewFoodFactoryCost);
+        textViewClothesFactoryCost = findViewById(R.id.textViewClothesFactoryCost);
+        textViewPaperFactoryCost = findViewById(R.id.textViewPaperFactoryCost);
+        textViewElectronicsFactoryCost = findViewById(R.id.textViewElectronicsFactoryCost);
+        textViewCarFactoryCost = findViewById(R.id.textViewCarFactoryCost);
         lineChart = findViewById(R.id.chart);
 
         lineChart.setDrawGridBackground(false);
@@ -83,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         lineChart.getAxisRight().setDrawGridLines(false);
 
         List<Entry> entries = new LinkedList<>();
-        for(long i = 0; i < 20; i++){
-            entries.add(new Entry(i,0));
+        for (long i = 0; i < 20; i++) {
+            entries.add(new Entry(i, 0));
         }
 
         LineDataSet dataset = new LineDataSet(entries, "Money");
@@ -94,6 +109,13 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(lineData);
 
         lineChart.invalidate();
+
+        // initialise text view texts
+        textViewFoodFactoryCost.setText("Food Factory Cost: " + foodFactory.getCostofFactory());
+        textViewClothesFactoryCost.setText("Clothes Factory Cost: " + clothesFactory.getCostofFactory());
+        textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
+        textViewElectronicsFactoryCost.setText("Electronics Factory Cost: " + electronicsFactory.getCostofFactory());
+        textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
 
 
         //loadGame(); // Load the saved game state
@@ -118,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 foodFactory.purchase(count);
                 foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewFoodFactoryCost.setText("Food Factory Cost: " + foodFactory.getCostofFactory());
                 //saveGame(); // Save the game state whenever the money is updated
             }
         });
@@ -133,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 clothesFactory.purchase(count);
                 clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewClothesFactoryCost.setText("Clothes Factory Cost: " + clothesFactory.getCostofFactory());
             }
         });
 
@@ -147,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 paperFactory.purchase(count);
                 paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
             }
         });
 
@@ -161,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 electronicsFactory.purchase(count);
                 electronicsFactoryClick.setText("Electronics Factory Count: " + electronicsFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewElectronicsFactoryCost.setText("Electronics Factory Cost: " + electronicsFactory.getCostofFactory());
             }
         });
 
@@ -175,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 carFactory.purchase(count);
                 carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
+                textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
             }
         });
 
@@ -182,12 +209,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_main:
-                        // Switch to the main fragment/activity
-                        return true;
-                }
-                return false;
+                // Switch to the main fragment/activity
+                return item.getItemId() == R.id.navigation_main;
             }
         });
 
@@ -210,12 +233,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // update textView here
                 entries.remove(1);
-                for(Entry e : entries){
-                    if(e.getX() != 0) {
+                for (Entry e : entries) {
+                    if (e.getX() != 0) {
                         e.setX(e.getX() - 1);
                     }
                 }
-                entries.add(new Entry(entries.size(),money.getMoney().floatValue()));
+                entries.add(new Entry(entries.size(), money.getMoney().floatValue()));
 
                 LineDataSet dataset = new LineDataSet(entries, "Money");
                 dataset.setColor(Color.BLUE);

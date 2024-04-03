@@ -1,7 +1,6 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -9,63 +8,95 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id='@+id/chart'
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-
-    <Button
-        android:id="@+id/moneyClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/foodFactoryClick"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Beg" />
-
-    <Button
-        android:id="@+id/foodFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/clothesFactoryClick"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Food Factory Count: 0" />
+        android:layout_height="300dp" />
 
     <TextView
         android:id="@+id/textViewMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_above="@id/moneyClick"
+        android:layout_centerHorizontal="true"
         android:text="Money: 0" />
+
+    <Button
+        android:id="@+id/moneyClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textViewFoodFactoryCost"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="14dp"
+        android:text="Beg" />
+
+    <TextView
+        android:id="@+id/textViewFoodFactoryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/foodFactoryClick"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/foodFactoryClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textViewClothesFactoryCost"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="14dp"
+        android:text="Clothes Factory Count: 0" />
+
+    <TextView
+        android:id="@+id/textViewClothesFactoryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/clothesFactoryClick"
+        android:layout_centerInParent="true" />
 
     <Button
         android:id="@+id/clothesFactoryClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/paperFactoryClick"
+        android:layout_above="@id/textViewPaperFactoryCost"
         android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Clothes Factory Count: 0"
-        />
+        android:layout_marginBottom="14dp"
+        android:text="Clothes Factory Count: 0" />
+
+    <TextView
+        android:id="@+id/textViewPaperFactoryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/paperFactoryClick"
+        android:layout_centerInParent="true" />
 
     <Button
         android:id="@+id/paperFactoryClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/electronicsFactoryClick"
+        android:layout_above="@id/textViewElectronicsFactoryCost"
         android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Paper Factory Count: 0"
-        />
+        android:layout_marginBottom="14dp"
+        android:text="Paper Factory Count: 0" />
+
+    <TextView
+        android:id="@+id/textViewElectronicsFactoryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/electronicsFactoryClick"
+        android:layout_centerInParent="true" />
 
     <Button
         android:id="@+id/electronicsFactoryClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/carFactoryClick"
+        android:layout_above="@id/textViewCarFactoryCost"
         android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Electronics Factory Count: 0"
-        />
+        android:layout_marginBottom="14dp"
+        android:text="Electronics Factory Count: 0" />
+
+    <TextView
+        android:id="@+id/textViewCarFactoryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/carFactoryClick"
+        android:layout_centerInParent="true" />
 
     <Button
         android:id="@+id/carFactoryClick"
@@ -73,9 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_navigation"
         android:layout_centerInParent="true"
-        android:layout_marginTop="14dp"
-        android:text="Car Factory Count: 0"
-        />
+        android:layout_marginBottom="14dp"
+        android:text="Car Factory Count: 0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -83,7 +113,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu" /> <!-- Menu resource will be defined next -->
-
 
 
 </RelativeLayout>
