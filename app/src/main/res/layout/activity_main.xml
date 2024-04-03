@@ -1,118 +1,146 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id='@+id/chart'
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textViewMoney"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/moneyClick"
-        android:layout_centerHorizontal="true"
-        android:text="Money: 0" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/moneyClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewFoodFactoryCost"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Beg" />
+            <com.github.mikephil.charting.charts.LineChart
+                android:id='@+id/chart'
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewFoodFactoryCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/foodFactoryClick"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/textViewMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Money: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chart" />
 
-    <Button
-        android:id="@+id/foodFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewClothesFactoryCost"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Clothes Factory Count: 0" />
+            <Button
+                android:id="@+id/moneyClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewMoney" />
 
-    <TextView
-        android:id="@+id/textViewClothesFactoryCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/clothesFactoryClick"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/textViewFoodFactoryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moneyClick" />
 
-    <Button
-        android:id="@+id/clothesFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewPaperFactoryCost"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Clothes Factory Count: 0" />
+            <Button
+                android:id="@+id/foodFactoryClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clothes Factory Count: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewFoodFactoryCost" />
 
-    <TextView
-        android:id="@+id/textViewPaperFactoryCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/paperFactoryClick"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/textViewClothesFactoryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/foodFactoryClick" />
 
-    <Button
-        android:id="@+id/paperFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewElectronicsFactoryCost"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Paper Factory Count: 0" />
+            <Button
+                android:id="@+id/clothesFactoryClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clothes Factory Count: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewClothesFactoryCost" />
 
-    <TextView
-        android:id="@+id/textViewElectronicsFactoryCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/electronicsFactoryClick"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/textViewPaperFactoryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clothesFactoryClick" />
 
-    <Button
-        android:id="@+id/electronicsFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewCarFactoryCost"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Electronics Factory Count: 0" />
+            <Button
+                android:id="@+id/paperFactoryClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paper Factory Count: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewPaperFactoryCost" />
 
-    <TextView
-        android:id="@+id/textViewCarFactoryCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/carFactoryClick"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/textViewElectronicsFactoryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/paperFactoryClick" />
 
-    <Button
-        android:id="@+id/carFactoryClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="14dp"
-        android:text="Car Factory Count: 0" />
+            <Button
+                android:id="@+id/electronicsFactoryClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Electronics Factory Count: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewElectronicsFactoryCost" />
+
+            <TextView
+                android:id="@+id/textViewCarFactoryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/electronicsFactoryClick" />
+
+            <Button
+                android:id="@+id/carFactoryClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Car Factory Count: 0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewCarFactoryCost" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_menu" /> <!-- Menu resource will be defined next -->
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</RelativeLayout>
