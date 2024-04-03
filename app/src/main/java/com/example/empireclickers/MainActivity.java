@@ -212,6 +212,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_main:
                         // Switch to the main fragment/activity
                         return true;
+                    case R.id.navigation_empire_builder:
+                        Intent intent = new Intent(MainActivity.this, EmpireActivity.class);
+                        startActivity(intent);
+                        return true;
                 }
                 return false;
             }
