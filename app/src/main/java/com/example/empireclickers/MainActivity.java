@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.widget.*;
 import android.view.*;
 import android.content.*;
+import android.provider.Settings;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,8 +34,10 @@ import java.util.*;
  * */
 
 public class MainActivity extends AppCompatActivity {
-
+    //initialise DB
+    DatabaseConfig db;
     // initialise buttons
+
     private Button moneyClick;
     private Button foodFactoryClick;
     private Button clothesFactoryClick;
@@ -68,9 +72,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseConfig(MainActivity.this);
+        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
+        Cursor cursor = db.getCredit(uId);
+        if(cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                long amount = cursor.getLong(0);
+                Log.i("Print amount", String.valueOf(amount));
+                money.addMoney(amount);
+            }
+
+        }
+        cursor.close();
         factories.add(foodFactory);
         factories.add(clothesFactory);
         factories.add(paperFactory);
@@ -257,6 +274,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        db.updateCredit(uId, money.getMoney());
+        Log.i("Print amount", String.valueOf(money.getMoney()));
+        //saveGame(); // Ensure the game state is saved when the app is paused
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        db.updateCredit(uId, money.getMoney());
+        Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
     }
 
