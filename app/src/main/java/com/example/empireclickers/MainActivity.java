@@ -201,8 +201,16 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Switch to the main fragment/activity
-                return item.getItemId() == R.id.navigation_main;
+                switch (item.getItemId()) {
+                    case R.id.navigation_main:
+                        // Switch to the main fragment/activity
+                        return true;
+                    case R.id.navigation_empire_builder:
+                        Intent intent = new Intent(MainActivity.this, EmpireActivity.class);
+                        startActivity(intent);
+                        return true;
+                }
+                return false;
             }
         });
 
@@ -278,13 +286,6 @@ public class MainActivity extends AppCompatActivity {
 //        money.setMoney(prefs.getInt("Money", 0)); // Load the money, default to 0 if not found
 //        textViewMoney.setText("Money: " + money.getMoney());
 //    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_nav_menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
