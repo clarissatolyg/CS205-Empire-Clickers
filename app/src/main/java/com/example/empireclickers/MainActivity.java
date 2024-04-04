@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewCarFactoryCost;
 
     private LineChart lineChart;
-    private final MoneyWrapper money = new MoneyWrapper(0);
+    private final MoneyWrapper money = MoneyWrapper.getInstance();
     // initialise factories
-    private final FoodFactory foodFactory = new FoodFactory();
-    private final ClothesFactory clothesFactory = new ClothesFactory();
-    private final PaperFactory paperFactory = new PaperFactory();
-    private final ElectronicsFactory electronicsFactory = new ElectronicsFactory();
-    private final CarFactory carFactory = new CarFactory();
+    private final FoodFactory foodFactory = FoodFactory.getInstance();
+    private final ClothesFactory clothesFactory = ClothesFactory.getInstance();
+    private final PaperFactory paperFactory = PaperFactory.getInstance();
+    private final ElectronicsFactory electronicsFactory = ElectronicsFactory.getInstance();
+    private final CarFactory carFactory = CarFactory.getInstance();
 
     private List<FactoryInterface> factories = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 long amount = cursor.getLong(0);
                 Log.i("Print amount", String.valueOf(amount));
-                money.addMoney(amount);
+//                money.addMoney(amount);
             }
 
         }
@@ -134,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
         textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
         textViewElectronicsFactoryCost.setText("Electronics Factory Cost: " + electronicsFactory.getCostofFactory());
         textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
+
+        foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
+        clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
+        paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
+        electronicsFactoryClick.setText("Electronics Factory Count: " + electronicsFactory.getCount());
+        carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
 
 
         //loadGame(); // Load the saved game state
@@ -208,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_empire_builder:
                         Intent intent = new Intent(MainActivity.this, EmpireActivity.class);
-                        intent.putExtra("MoneyWrapper", money);
-                        intent.putExtra("factories", (Serializable) factories);
+//                        intent.putExtra("MoneyWrapper", money);
+//                        intent.putExtra("factories", (Serializable) factories);
                         startActivity(intent);
                         return true;
                 }
@@ -260,10 +266,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        db.updateCredit(uId, money.getMoney());
-        Log.i("Print amount", String.valueOf(money.getMoney()));
+//        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//
+//        db.updateCredit(uId, money.getMoney());
+//        Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
 
     }

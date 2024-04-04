@@ -1,13 +1,19 @@
 package com.example.empireclickers;
 
 public class ElectronicsFactory implements FactoryInterface {
+    private static ElectronicsFactory instance;
     private final long profitPerSecond = 30;
     private long count = 0;
     private long costofFactory = 48;
 
-    public ElectronicsFactory() {
-    }
+    private ElectronicsFactory() {}
 
+    public static synchronized ElectronicsFactory getInstance() {
+        if (instance == null) {
+            instance = new ElectronicsFactory();
+        }
+        return instance;
+    }
     public void purchase(MoneyWrapper moneyWrapper) {
         while(moneyWrapper.getMoney().longValue() >= this.costofFactory){
             moneyWrapper.deductMoney(this.costofFactory);
