@@ -2,7 +2,7 @@ package com.example.empireclickers;
 
 public interface FactoryInterface {
 
-    public void purchase(int amount);
+    public void purchase(MoneyWrapper money);
 
     public long netProfitPerSecond();
 

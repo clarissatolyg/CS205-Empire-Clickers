@@ -8,11 +8,11 @@ public class PaperFactory implements FactoryInterface {
     public PaperFactory() {
     }
 
-    public void purchase(int amount) {
-        for (int i = 0; i < amount; i++) {
+    public void purchase(MoneyWrapper moneyWrapper) {
+        while(moneyWrapper.getMoney().longValue() >= this.costofFactory){
+            moneyWrapper.deductMoney(this.costofFactory);
             this.count += 1;
-            double temp = this.costofFactory * 1.1; // increase cost of factory after every purchase
-            this.costofFactory = Math.round(Math.ceil(temp));
+            this.costofFactory = Math.round(Math.ceil(this.costofFactory * 1.1));
         }
     }
 

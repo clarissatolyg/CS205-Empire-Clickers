@@ -149,12 +149,7 @@ public class MainActivity extends AppCompatActivity {
         foodFactoryClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count = 0;
-                while (money.getMoney().intValue() >= foodFactory.getCostofFactory()) {
-                    money.deductMoney(foodFactory.getCostofFactory());
-                    count++;
-                }
-                foodFactory.purchase(count);
+                foodFactory.purchase(money);
                 foodFactoryClick.setText("Food Factory Count: " + foodFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
                 textViewFoodFactoryCost.setText("Food Factory Cost: " + foodFactory.getCostofFactory());
@@ -165,12 +160,7 @@ public class MainActivity extends AppCompatActivity {
         clothesFactoryClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count = 0;
-                while (money.getMoney().intValue() >= clothesFactory.getCostofFactory()) {
-                    money.deductMoney(clothesFactory.getCostofFactory());
-                    count++;
-                }
-                clothesFactory.purchase(count);
+                clothesFactory.purchase(money);
                 clothesFactoryClick.setText("Clothes Factory Count: " + clothesFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
                 textViewClothesFactoryCost.setText("Clothes Factory Cost: " + clothesFactory.getCostofFactory());
@@ -180,12 +170,7 @@ public class MainActivity extends AppCompatActivity {
         paperFactoryClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = 0;
-                while (money.getMoney().intValue() >= paperFactory.getCostofFactory()) {
-                    money.deductMoney(paperFactory.getCostofFactory());
-                    count++;
-                }
-                paperFactory.purchase(count);
+                paperFactory.purchase(money);
                 paperFactoryClick.setText("Paper Factory Count: " + paperFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
                 textViewPaperFactoryCost.setText("Paper Factory Cost: " + paperFactory.getCostofFactory());
@@ -195,12 +180,7 @@ public class MainActivity extends AppCompatActivity {
         electronicsFactoryClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = 0;
-                while (money.getMoney().intValue() >= electronicsFactory.getCostofFactory()) {
-                    money.deductMoney(electronicsFactory.getCostofFactory());
-                    count++;
-                }
-                electronicsFactory.purchase(count);
+                electronicsFactory.purchase(money);
                 electronicsFactoryClick.setText("Electronics Factory Count: " + electronicsFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
                 textViewElectronicsFactoryCost.setText("Electronics Factory Cost: " + electronicsFactory.getCostofFactory());
@@ -210,12 +190,7 @@ public class MainActivity extends AppCompatActivity {
         carFactoryClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = 0;
-                while (money.getMoney().intValue() >= carFactory.getCostofFactory()) {
-                    money.deductMoney(carFactory.getCostofFactory());
-                    count++;
-                }
-                carFactory.purchase(count);
+                carFactory.purchase(money);
                 carFactoryClick.setText("Car Factory Count: " + carFactory.getCount());
                 textViewMoney.setText("Money: " + money.getMoney().toString());
                 textViewCarFactoryCost.setText("Car Factory Cost: " + carFactory.getCostofFactory());
