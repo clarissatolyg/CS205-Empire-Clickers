@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -207,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_empire_builder:
                         Intent intent = new Intent(MainActivity.this, EmpireActivity.class);
+                        intent.putExtra("MoneyWrapper", money);
+                        intent.putExtra("factories", (Serializable) factories);
                         startActivity(intent);
                         return true;
                 }
@@ -262,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         db.updateCredit(uId, money.getMoney());
         Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
+
     }
 
     @Override

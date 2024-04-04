@@ -1,6 +1,8 @@
 package com.example.empireclickers;
 
-public interface FactoryInterface {
+import java.io.Serializable;
+
+public interface FactoryInterface extends Serializable {
 
     public void purchase(MoneyWrapper money);
 
