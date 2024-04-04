@@ -12,6 +12,9 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "SUPABASE_URL", '"https://your-project-url.supabase.co"'
+        buildConfigField "String", "SUPABASE_PUBLIC_KEY", '"your-public-api-key"'
+        
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

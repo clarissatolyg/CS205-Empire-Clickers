@@ -27,6 +27,7 @@ import org.w3c.dom.Text;
 import java.util.*;
 
 
+
 /*
  * Basic Click Mechanism: Implemented in MainActivity, usually tied to a Button's OnClickListener.
  * Save and Load Game State: Could also live in MainActivity, using SharedPreferences or a dedicated class for managing persistent storage.
@@ -36,6 +37,12 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity {
     //initialise DB
     DatabaseConfig db;
+
+    // supabase client
+    SupabaseClient supabase = SupabaseClient.create(BuildConfig.SUPABASE_URL, BuildConfig.SUPABASE_KEY);
+    HighScore highScore = new HighScore(supabase);
+
+
     // initialise buttons
 
     private Button moneyClick;
