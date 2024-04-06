@@ -127,4 +127,5 @@ public class EmpireActivity extends AppCompatActivity {
         super.onPause();
         stopService(new Intent(this, BackgroundSoundService.class));
     }
+
 }
