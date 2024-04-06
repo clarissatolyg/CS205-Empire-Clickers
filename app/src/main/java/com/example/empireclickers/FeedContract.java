@@ -13,5 +13,14 @@ public final class FeedContract {
         public static final String COLUMN_NAME_TITLE = "credit";
 
     }
+
+    public static class FactoryEntry implements BaseColumns {
+        public static final String TABLE_NAME = "factory";
+        public static final String FAC_COUNT = "count";
+        public static final String FAC_PROFIT = "profit";
+        public static final String FAC_COST = "cost";
+        public static final String FAC_TYPE = "fac_type";
+    }
+
 }
 

@@ -34,4 +34,6 @@ public class CarFactory implements FactoryInterface{
     public long getCostofFactory() {
         return costofFactory;
     }
+    public void setCount(long count) { this.count = count; }
+    public void setCost(long cost) { costofFactory = cost; }
 }

@@ -80,15 +80,81 @@ public class MainActivity extends AppCompatActivity {
         String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         Cursor cursor = db.getCredit(uId);
+        Log.i("log", cursor.toString());
         if(cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 long amount = cursor.getLong(0);
                 Log.i("Print amount", String.valueOf(amount));
-//                money.addMoney(amount);
+                money.addMoney(amount);
             }
 
         }
         cursor.close();
+
+        Cursor cursorFood = db.getFactory(uId, "food");
+        if(cursorFood.getCount() != 0) {
+            while (cursorFood.moveToNext()) {
+                long cost = cursorFood.getLong(0);
+                long count = cursorFood.getLong(1);
+                Log.i("Print food cost", String.valueOf(cost));
+                Log.i("Print food count", String.valueOf(count));
+                foodFactory.setCount(count);
+                foodFactory.setCost(cost);
+            }
+        }
+
+        Cursor cursorClothes = db.getFactory(uId, "clothes");
+        if(cursorClothes.getCount() != 0) {
+            while (cursorClothes.moveToNext()) {
+                long cost = cursorClothes.getLong(0);
+                long count = cursorClothes.getLong(1);
+                Log.i("Print clothes cost", String.valueOf(cost));
+                Log.i("Print clothes count", String.valueOf(count));
+                clothesFactory.setCount(count);
+                clothesFactory.setCost(cost);
+            }
+        }
+        cursorClothes.close();
+
+        Cursor cursorPaper = db.getFactory(uId, "paper");
+        if(cursorPaper.getCount() != 0) {
+            while (cursorPaper.moveToNext()) {
+                long cost = cursorPaper.getLong(0);
+                long count = cursorPaper.getLong(1);
+                Log.i("Print paper cost", String.valueOf(cost));
+                Log.i("Print paper count", String.valueOf(count));
+                paperFactory.setCount(count);
+                paperFactory.setCost(cost);
+            }
+        }
+        cursorPaper.close();
+
+        Cursor cursorElectronics = db.getFactory(uId, "electronics");
+        if(cursorElectronics.getCount() != 0) {
+            while (cursorElectronics.moveToNext()) {
+                long cost = cursorElectronics.getLong(0);
+                long count = cursorElectronics.getLong(1);
+                Log.i("Print electronics cost", String.valueOf(cost));
+                Log.i("Print electronics count", String.valueOf(count));
+                electronicsFactory.setCount(count);
+                electronicsFactory.setCost(cost);
+            }
+        }
+        cursorElectronics.close();
+
+        Cursor cursorCar = db.getFactory(uId, "car");
+        if(cursorCar.getCount() != 0) {
+            while (cursorCar.moveToNext()) {
+                long cost = cursorCar.getLong(0);
+                long count = cursorCar.getLong(1);
+                Log.i("Print car cost", String.valueOf(cost));
+                Log.i("Print car count", String.valueOf(count));
+                carFactory.setCount(count);
+                carFactory.setCost(cost);
+            }
+        }
+        cursorCar.close();
+
         factories.add(foodFactory);
         factories.add(clothesFactory);
         factories.add(paperFactory);
@@ -266,10 +332,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        //String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 //
-//        db.updateCredit(uId, money.getMoney());
-//        Log.i("Print amount", String.valueOf(money.getMoney()));
+        //db.updateCredit(uId, money.getMoney());
+        //Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
 
     }
@@ -280,7 +346,18 @@ public class MainActivity extends AppCompatActivity {
         String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         db.updateCredit(uId, money.getMoney());
-        Log.i("Print amount", String.valueOf(money.getMoney()));
+        db.updateFactory(uId, foodFactory.getCostofFactory(), foodFactory.getCount(), foodFactory.getProfitPerSecond(), "food");
+        db.updateFactory(uId, clothesFactory.getCostofFactory(), clothesFactory.getCount(), clothesFactory.getProfitPerSecond(), "clothes");
+        db.updateFactory(uId, paperFactory.getCostofFactory(), paperFactory.getCount(), paperFactory.getProfitPerSecond(), "paper");
+        db.updateFactory(uId, electronicsFactory.getCostofFactory(), electronicsFactory.getCount(), electronicsFactory.getProfitPerSecond(), "electronics");
+        db.updateFactory(uId, carFactory.getCostofFactory(), carFactory.getCount(), carFactory.getProfitPerSecond(), "car");
+        Log.i("Print money amount", String.valueOf(money.getMoney()));
+        Log.i("Print food count", String.valueOf(foodFactory.getCount()));
+        Log.i("Print clothes count", String.valueOf(clothesFactory.getCount()));
+        Log.i("Print paper count", String.valueOf(paperFactory.getCount()));
+        Log.i("Print electronics count", String.valueOf(electronicsFactory.getCount()));
+        Log.i("Print car count", String.valueOf(carFactory.getCount()));
+
         //saveGame(); // Ensure the game state is saved when the app is paused
     }
 
