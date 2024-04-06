@@ -72,11 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final UpdateMoneyExecutorPool updateMoneyExecutorPool = new UpdateMoneyExecutorPool();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController controller = getWindow().getInsetsController();
@@ -353,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         //db.updateCredit(uId, money.getMoney());
         //Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
-
+        stopService(new Intent(this, BackgroundSoundService.class));
     }
 
     @Override
@@ -376,6 +378,19 @@ public class MainActivity extends AppCompatActivity {
 
         //saveGame(); // Ensure the game state is saved when the app is paused
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
 
 //    private void saveGame() {
 //        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);

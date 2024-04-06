@@ -109,4 +109,22 @@ public class EmpireActivity extends AppCompatActivity {
         });
         bottomNav.setSelectedItemId(R.id.navigation_empire_builder);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, BackgroundSoundService.class));
+    }
 }
