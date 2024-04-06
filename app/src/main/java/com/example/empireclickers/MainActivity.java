@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 foodFactory.setCost(cost);
             }
         }
+        cursorFood.close();
 
         Cursor cursorClothes = db.getFactory(uId, "clothes");
         if(cursorClothes.getCount() != 0) {
@@ -344,7 +345,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
-
+        DataTransfer dataTransfer = new DataTransfer("credits");
+        CreditModel creditModel = new CreditModel(uId, money.getMoney().toString());
+        dataTransfer.execute(creditModel);
+        DataTransfer factoryTransfer1 = new DataTransfer("factory");
+        DataTransfer factoryTransfer2 = new DataTransfer("factory");
+        DataTransfer factoryTransfer3 = new DataTransfer("factory");
+        DataTransfer factoryTransfer4 = new DataTransfer("factory");
+        DataTransfer factoryTransfer5 = new DataTransfer("factory");
+        FactoryModel foodModel = new FactoryModel(uId, foodFactory.getCostofFactory(), foodFactory.getCount(), foodFactory.getProfitPerSecond(), "food");
+        FactoryModel clothesModel = new FactoryModel(uId, clothesFactory.getCostofFactory(), clothesFactory.getCount(), clothesFactory.getProfitPerSecond(), "clothes");
+        FactoryModel paperModel = new FactoryModel(uId, paperFactory.getCostofFactory(), paperFactory.getCount(), paperFactory.getProfitPerSecond(), "paper");
+        FactoryModel electronicsModel = new FactoryModel(uId, electronicsFactory.getCostofFactory(), electronicsFactory.getCount(), electronicsFactory.getProfitPerSecond(), "electronics");
+        FactoryModel carModel = new FactoryModel(uId, carFactory.getCostofFactory(), carFactory.getCount(), carFactory.getProfitPerSecond(), "car");
+        factoryTransfer1.execute(foodModel);
+        factoryTransfer2.execute(clothesModel);
+        factoryTransfer3.execute(paperModel);
+        factoryTransfer4.execute(electronicsModel);
+        factoryTransfer5.execute(carModel);
         db.updateCredit(uId, money.getMoney());
         db.updateFactory(uId, foodFactory.getCostofFactory(), foodFactory.getCount(), foodFactory.getProfitPerSecond(), "food");
         db.updateFactory(uId, clothesFactory.getCostofFactory(), clothesFactory.getCount(), clothesFactory.getProfitPerSecond(), "clothes");
