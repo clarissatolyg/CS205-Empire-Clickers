@@ -1,8 +1,13 @@
 package com.example.empireclickers;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,10 +29,26 @@ public class EmpireActivity extends AppCompatActivity {
     private final CarFactory carFactory = CarFactory.getInstance();
 
     private List<FactoryInterface> factories = new ArrayList<>();
+    private GameView gameView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empire);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.hide(WindowInsets.Type.statusBars());
+            }
+        } else {
+            // Use deprecated methods for older APIs.
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+            );
+        }
+
 
         factories.add(foodFactory);
         factories.add(clothesFactory);
@@ -50,6 +71,25 @@ public class EmpireActivity extends AppCompatActivity {
         }
 
 
+        gameView = findViewById((R.id.gameView));
+        gameView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // at this point, layout has been completed and the dimensions of gameView are available
+                int width = gameView.getWidth();
+                int height = gameView.getHeight();
+
+                // now can use these dimensions to initialise factories
+                gameView.init(EmpireActivity.this);
+
+                // remove global layout listener when done
+                gameView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+
+
+        });
+
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,5 +107,25 @@ public class EmpireActivity extends AppCompatActivity {
                 return false;
             }
         });
+        bottomNav.setSelectedItemId(R.id.navigation_empire_builder);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, BackgroundSoundService.class));
+    }
+
 }

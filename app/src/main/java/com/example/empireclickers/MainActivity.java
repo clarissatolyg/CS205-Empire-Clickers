@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -71,17 +72,33 @@ public class MainActivity extends AppCompatActivity {
 
     private final UpdateMoneyExecutorPool updateMoneyExecutorPool = new UpdateMoneyExecutorPool();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.hide(WindowInsets.Type.statusBars());
+            }
+        } else {
+            // Use deprecated methods for older APIs.
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+            );
+        }
+
         db = new DatabaseConfig(MainActivity.this);
         String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         Cursor cursor = db.getCredit(uId);
         Log.i("log", cursor.toString());
-        if(cursor.getCount() != 0) {
+        if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 long amount = cursor.getLong(0);
                 Log.i("Print amount", String.valueOf(amount));
@@ -92,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
 
         Cursor cursorFood = db.getFactory(uId, "food");
-        if(cursorFood.getCount() != 0) {
+        if (cursorFood.getCount() != 0) {
             while (cursorFood.moveToNext()) {
                 long cost = cursorFood.getLong(0);
                 long count = cursorFood.getLong(1);
@@ -105,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         cursorFood.close();
 
         Cursor cursorClothes = db.getFactory(uId, "clothes");
-        if(cursorClothes.getCount() != 0) {
+        if (cursorClothes.getCount() != 0) {
             while (cursorClothes.moveToNext()) {
                 long cost = cursorClothes.getLong(0);
                 long count = cursorClothes.getLong(1);
@@ -118,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         cursorClothes.close();
 
         Cursor cursorPaper = db.getFactory(uId, "paper");
-        if(cursorPaper.getCount() != 0) {
+        if (cursorPaper.getCount() != 0) {
             while (cursorPaper.moveToNext()) {
                 long cost = cursorPaper.getLong(0);
                 long count = cursorPaper.getLong(1);
@@ -131,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         cursorPaper.close();
 
         Cursor cursorElectronics = db.getFactory(uId, "electronics");
-        if(cursorElectronics.getCount() != 0) {
+        if (cursorElectronics.getCount() != 0) {
             while (cursorElectronics.moveToNext()) {
                 long cost = cursorElectronics.getLong(0);
                 long count = cursorElectronics.getLong(1);
@@ -144,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         cursorElectronics.close();
 
         Cursor cursorCar = db.getFactory(uId, "car");
-        if(cursorCar.getCount() != 0) {
+        if (cursorCar.getCount() != 0) {
             while (cursorCar.moveToNext()) {
                 long cost = cursorCar.getLong(0);
                 long count = cursorCar.getLong(1);
@@ -155,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         cursorCar.close();
+
 
         factories.add(foodFactory);
         factories.add(clothesFactory);
@@ -338,12 +356,13 @@ public class MainActivity extends AppCompatActivity {
         //db.updateCredit(uId, money.getMoney());
         //Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
-
+        stopService(new Intent(this, BackgroundSoundService.class));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
         String uId = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
         DataTransfer dataTransfer = new DataTransfer("credits");
         CreditModel creditModel = new CreditModel(uId, money.getMoney().toString());
@@ -378,6 +397,19 @@ public class MainActivity extends AppCompatActivity {
 
         //saveGame(); // Ensure the game state is saved when the app is paused
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, BackgroundSoundService.class));
+    }
+
 
 //    private void saveGame() {
 //        SharedPreferences prefs = getSharedPreferences("EmpireClickersPrefs", MODE_PRIVATE);

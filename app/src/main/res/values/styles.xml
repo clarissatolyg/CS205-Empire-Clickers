@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/BottomNavigationView.ActiveTextAppearance</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationView.InactiveTextAppearance</item>
+    </style>
+
+    <style name="BottomNavigationView.ActiveTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">18sp</item>
+        <!-- You can adjust textSize and other text properties if needed -->
+    </style>
+
+    <style name="BottomNavigationView.InactiveTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">18sp</item>
+        <!-- Match active and inactive text sizes for consistent appearance -->
+    </style>
+</resources>
