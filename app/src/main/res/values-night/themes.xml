@@ -1,16 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 	<!-- Base application theme. -->
-	<style name="Theme.CounterApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-		<!-- Primary brand color. -->
-		<item name="colorPrimary">@color/purple_200</item>
-		<item name="colorPrimaryVariant">@color/purple_700</item>
-		<item name="colorOnPrimary">@color/black</item>
-		<!-- Secondary brand color. -->
-		<item name="colorSecondary">@color/teal_200</item>
-		<item name="colorSecondaryVariant">@color/teal_200</item>
-		<item name="colorOnSecondary">@color/black</item>
-		<!-- Status bar color. -->
-		<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-		<!-- Customize your theme here. -->
+	<style name="Theme.CounterApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<item name="colorPrimary">@color/dark_green</item>
+		<item name="colorPrimaryVariant">@color/light_green</item>
+		<item name="colorOnPrimary">@color/white</item>
+
+		<!-- Secondary colors that complement the primary ones -->
+		<item name="colorSecondary">@color/red</item>
+		<item name="colorSecondaryVariant">@color/dark_red</item>
+		<item name="colorOnSecondary">@color/white</item>
+
+		<!-- Transparent status bar for an immersive experience -->
+		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 </resources>
