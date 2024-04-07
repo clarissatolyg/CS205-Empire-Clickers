@@ -1,32 +1,33 @@
 package com.example.empireclickers;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
-import android.util.Log;
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.*;
-import android.view.*;
-import android.content.*;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /*
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private int updateInterval = 1000;
 
     private final UpdateMoneyExecutorPool updateMoneyExecutorPool = new UpdateMoneyExecutorPool();
+
+    private final BackgroundMusic backgroundMusic = BackgroundMusic.getInstance();
 
 
     @Override
@@ -356,7 +359,6 @@ public class MainActivity extends AppCompatActivity {
         //db.updateCredit(uId, money.getMoney());
         //Log.i("Print amount", String.valueOf(money.getMoney()));
         //saveGame(); // Ensure the game state is saved when the app is paused
-        stopService(new Intent(this, BackgroundSoundService.class));
     }
 
     @Override
@@ -396,18 +398,10 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Print car count", String.valueOf(carFactory.getCount()));
 
         //saveGame(); // Ensure the game state is saved when the app is paused
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startService(new Intent(this, BackgroundSoundService.class));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        startService(new Intent(this, BackgroundSoundService.class));
+//        if (!isChangingConfigurations() && !isFinishing()) {
+//            backgroundMusic.startPlaying();
+//        }
     }
 
 
@@ -445,6 +439,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        backgroundMusic.initialiseMediaPlayer(this);
+        backgroundMusic.startPlaying();
     }
 
 

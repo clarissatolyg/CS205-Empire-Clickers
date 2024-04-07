@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class EmpireActivity extends AppCompatActivity {
 
     private List<FactoryInterface> factories = new ArrayList<>();
     private GameView gameView;
+    private BackgroundMusic backgroundMusic = BackgroundMusic.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,22 +110,19 @@ public class EmpireActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.navigation_empire_builder);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startService(new Intent(this, BackgroundSoundService.class));
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (!isChangingConfigurations() && !isFinishing()) {
+//            backgroundMusic.startPlaying();
+//        }
+//    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        startService(new Intent(this, BackgroundSoundService.class));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopService(new Intent(this, BackgroundSoundService.class));
+        backgroundMusic.initialiseMediaPlayer(this);
+        backgroundMusic.startPlaying();
     }
 
 }
